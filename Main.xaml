@@ -32,7 +32,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="26">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="25">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -57,7 +57,6 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>System.Memory</AssemblyReference>
       <AssemblyReference>NPOI</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
@@ -73,6 +72,7 @@
       <Variable x:TypeArguments="x:String" Name="temperature" />
       <Variable x:TypeArguments="x:String" Name="outfitSuggestion" />
       <Variable x:TypeArguments="x:String" Name="weather" />
+      <Variable x:TypeArguments="x:String" Name="rainGear" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -150,43 +150,41 @@
                   <OutArgument x:TypeArguments="x:String">[temperature]</OutArgument>
                 </ui:GetFullText.Text>
               </ui:GetFullText>
-              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="333.6,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;weather: &quot; + weather + Environment.NewLine +&#xD;&#xA;&quot;temperature: &quot; +temperature]" />
+              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="333.6,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;weather: &quot; + weather + Environment.NewLine +&#xA;&quot;temperature: &quot; +temperature]" />
               <ui:CloseTab Browser="{x:Null}" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="333.6,22.4" sap2010:WorkflowViewState.IdRef="CloseTab_1" />
             </Sequence>
           </ActivityAction>
         </ui:OpenBrowser.Body>
       </ui:OpenBrowser>
     </Sequence>
-    <Flowchart DisplayName="Analyze the weather" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart DisplayName="Analyze the weather" sap:VirtualizedContainerService.HintSize="667.2,636.8" sap2010:WorkflowViewState.IdRef="Flowchart_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
           <av:Size x:Key="ShapeSize">60,75.2</av:Size>
-          <av:PointCollection x:Key="ConnectorLocation">300,77.7 300,156.4</av:PointCollection>
+          <av:PointCollection x:Key="ConnectorLocation">300,77.7 300,103.6</av:PointCollection>
+          <x:Double x:Key="Width">633.6</x:Double>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <Flowchart.StartNode>
-        <x:Reference>__ReferenceID4</x:Reference>
+        <x:Reference>__ReferenceID5</x:Reference>
       </Flowchart.StartNode>
-      <FlowDecision x:Name="__ReferenceID4" DisplayName="Too cold?" sap:VirtualizedContainerService.HintSize="70.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
-        <FlowDecision.Condition>
-          <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="cint(temperature)&lt;40" />
-        </FlowDecision.Condition>
+      <FlowDecision x:Name="__ReferenceID4" Condition="[cint(temperature)&lt;40]" DisplayName="Too cold?" sap:VirtualizedContainerService.HintSize="70.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">264.8,156.4</av:Point>
+            <av:Point x:Key="ShapeLocation">274.8,206.4</av:Point>
             <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
-            <av:PointCollection x:Key="TrueConnector">264.8,200 140,200 140,150</av:PointCollection>
-            <av:PointCollection x:Key="FalseConnector">335.2,200 365.2,200 365.2,96.4 462.4,96.4 462.4,126.4</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">274.8,250 140,250 140,220</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">345.2,250 375.2,250 375.2,166.4 532.4,166.4 532.4,196.4</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <FlowDecision.True>
           <FlowStep x:Name="__ReferenceID0">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <av:Point x:Key="ShapeLocation">8.80000000000001,90</av:Point>
+                <av:Point x:Key="ShapeLocation">8.80000000000001,160</av:Point>
                 <av:Size x:Key="ShapeSize">262.4,60</av:Size>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
@@ -206,24 +204,21 @@
           </FlowStep>
         </FlowDecision.True>
         <FlowDecision.False>
-          <FlowDecision x:Name="__ReferenceID1" DisplayName="Too hot?" sap:VirtualizedContainerService.HintSize="70.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
-            <FlowDecision.Condition>
-              <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="cint(temperature) &gt; 80" />
-            </FlowDecision.Condition>
+          <FlowDecision x:Name="__ReferenceID1" Condition="[cint(temperature) &gt; 80]" DisplayName="Too hot?" sap:VirtualizedContainerService.HintSize="70.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                <av:Point x:Key="ShapeLocation">444.8,126.4</av:Point>
+                <av:Point x:Key="ShapeLocation">514.8,196.4</av:Point>
                 <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
-                <av:PointCollection x:Key="TrueConnector">444.8,170 414.8,170 414.8,320 140,320 140,350</av:PointCollection>
-                <av:PointCollection x:Key="FalseConnector">515.2,170 545.2,170 545.2,320 460,320 460,350</av:PointCollection>
+                <av:PointCollection x:Key="TrueConnector">514.8,240 484.8,240 484.8,360 140,360 140,390</av:PointCollection>
+                <av:PointCollection x:Key="FalseConnector">585.2,240 615.2,240 615.2,370 470,370 470,400</av:PointCollection>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <FlowDecision.True>
               <FlowStep x:Name="__ReferenceID2">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <av:Point x:Key="ShapeLocation">8.80000000000001,350</av:Point>
+                    <av:Point x:Key="ShapeLocation">8.80000000000001,390</av:Point>
                     <av:Size x:Key="ShapeSize">262.4,60</av:Size>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
@@ -246,7 +241,7 @@
               <FlowStep x:Name="__ReferenceID3">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <av:Point x:Key="ShapeLocation">328.8,350</av:Point>
+                    <av:Point x:Key="ShapeLocation">338.8,400</av:Point>
                     <av:Size x:Key="ShapeSize">262.4,60</av:Size>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
@@ -272,7 +267,45 @@
       <x:Reference>__ReferenceID1</x:Reference>
       <x:Reference>__ReferenceID2</x:Reference>
       <x:Reference>__ReferenceID3</x:Reference>
+      <FlowStep x:Name="__ReferenceID5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,103.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,156.4 300,186.4 310,186.4 310,206.4</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If Condition="[weather.Contains(&quot;rain&quot;) or weather.Contains(&quot;showers&quot;) or weather.Contains(&quot;thunderstorm&quot;)]" sap:VirtualizedContainerService.HintSize="483.2,248.8" sap2010:WorkflowViewState.IdRef="If_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <If.Then>
+            <Assign sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[rainGear]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String" xml:space="preserve"> Bring an umbrella with you!</InArgument>
+              </Assign.Value>
+            </Assign>
+          </If.Then>
+          <If.Else>
+            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </Sequence>
+          </If.Else>
+        </If>
+        <FlowStep.Next>
+          <x:Reference>__ReferenceID4</x:Reference>
+        </FlowStep.Next>
+      </FlowStep>
     </Flowchart>
-    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;The temperature in &quot; + city + &quot; is: &quot; + temperature + &quot; degrees fahrenheit &quot; + vbCr + &quot;The weather is: &quot; + weather + vbCr + outfitSuggestion]" />
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Display Suggestion" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;The temperature in &quot; + city + &quot; is: &quot; + temperature + &quot; degrees fahrenheit &quot; + vbCr + &quot;The weather is: &quot; + weather + vbCr + outfitSuggestion  + rainGear]" />
   </Sequence>
 </Activity>
